@@ -15,6 +15,144 @@
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════
+     MODAL — TAMBAH RUTE DISTRIBUSI (BPBD)
+═══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalTambahRute" onclick="closeModal('modalTambahRute')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">
+        <span>🚒</span>
+        <div>
+          <h3>Tambah Rute Distribusi Air</h3>
+          <p>BPBD Kota Palu — Rencana pengiriman truk tangki</p>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modalTambahRute')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Kelurahan Tujuan <span class="req">*</span></label>
+          <select id="ruteKelurahan" class="modal-input">
+            <option value="">-- Pilih Kelurahan --</option>
+            <optgroup label="🔴 Zona Kritis">
+              <option value="Talise">Talise (Mantikulore)</option>
+              <option value="Besusu Timur">Besusu Timur (Palu Timur)</option>
+              <option value="Mamboro">Mamboro (Palu Utara)</option>
+              <option value="Lasoani">Lasoani (Mantikulore)</option>
+              <option value="Poboya">Poboya (Mantikulore)</option>
+              <option value="Tondo">Tondo (Mantikulore)</option>
+            </optgroup>
+            <optgroup label="🟡 Zona Waspada">
+              <option value="Balaroa">Balaroa (Palu Barat)</option>
+              <option value="Pantoloan">Pantoloan (Tawaeli)</option>
+              <option value="Lambara">Lambara (Tawaeli)</option>
+              <option value="Tipo">Tipo (Ulujadi)</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label>Zona Prioritas <span class="req">*</span></label>
+          <select id="ruteZona" class="modal-input">
+            <option value="kritis">🔴 Kritis — Prioritas Utama</option>
+            <option value="waspada">🟡 Waspada — Prioritas Kedua</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Nomor Truk <span class="req">*</span></label>
+          <input type="text" id="ruteTruk" class="modal-input" placeholder="cth: A01, B03, C07" maxlength="6"/>
+        </div>
+        <div class="modal-field">
+          <label>Volume Tangki</label>
+          <select id="ruteVolume" class="modal-input">
+            <option value="5.000 L">5.000 Liter</option>
+            <option value="8.000 L" selected>8.000 Liter</option>
+            <option value="10.000 L">10.000 Liter</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Tanggal Pengiriman <span class="req">*</span></label>
+          <input type="date" id="ruteTanggal" class="modal-input"/>
+        </div>
+        <div class="modal-field">
+          <label>Jam Pengiriman <span class="req">*</span></label>
+          <input type="time" id="ruteJam" class="modal-input" value="08:00"/>
+        </div>
+      </div>
+      <div class="modal-field">
+        <label>Catatan Tambahan</label>
+        <textarea id="ruteCatatan" class="modal-input modal-textarea" placeholder="Instruksi khusus untuk pengemudi, titik pemberhentian, dll..."></textarea>
+      </div>
+      <div id="ruteError" class="modal-error" style="display:none"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn-cancel" onclick="closeModal('modalTambahRute')">Batal</button>
+      <button class="modal-btn-submit" onclick="submitTambahRute()">🚒 Tambah Rute</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL — TAMBAH PENGGUNA (SUPERADMIN)
+═══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalTambahPengguna" onclick="closeModal('modalTambahPengguna')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">
+        <span>👤</span>
+        <div>
+          <h3>Tambah Pengguna Admin</h3>
+          <p>Superadmin — Buat akun baru untuk DLH atau BPBD</p>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modalTambahPengguna')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Nama Lengkap <span class="req">*</span></label>
+          <input type="text" id="pgNama" class="modal-input" placeholder="cth: Admin DLH Palu"/>
+        </div>
+        <div class="modal-field">
+          <label>Role / Jabatan <span class="req">*</span></label>
+          <select id="pgRole" class="modal-input">
+            <option value="DLH">🌿 DLH — Dinas Lingkungan Hidup</option>
+            <option value="BPBD">🚒 BPBD — Penanggulangan Bencana</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Username <span class="req">*</span></label>
+          <input type="text" id="pgUsername" class="modal-input" placeholder="cth: admin_dlh" autocomplete="off"/>
+        </div>
+        <div class="modal-field">
+          <label>Password <span class="req">*</span></label>
+          <input type="password" id="pgPassword" class="modal-input" placeholder="Minimal 8 karakter" autocomplete="new-password"/>
+        </div>
+      </div>
+      <div class="modal-field">
+        <label>Email Dinas</label>
+        <input type="email" id="pgEmail" class="modal-input" placeholder="cth: admin@dlh.palukota.go.id"/>
+      </div>
+      <div class="modal-field">
+        <label>No. HP / WhatsApp</label>
+        <input type="tel" id="pgHp" class="modal-input" placeholder="cth: 0812-3456-7890"/>
+      </div>
+      <div id="pgError" class="modal-error" style="display:none"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn-cancel" onclick="closeModal('modalTambahPengguna')">Batal</button>
+      <button class="modal-btn-submit" onclick="submitTambahPengguna()">👤 Buat Akun</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
      NAVBAR
 ═══════════════════════════════════════════════════════════ -->
 <nav class="navbar" id="navbar">
@@ -40,16 +178,39 @@
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#beranda" class="nav-link active" onclick="navigateTo('beranda')">Beranda</a></li>
-      <li><a href="#dashboard" class="nav-link" onclick="navigateTo('dashboard')">Dashboard</a></li>
       <li><a href="#peta" class="nav-link" onclick="navigateTo('peta')">Peta</a></li>
       <li><a href="#laporan" class="nav-link" onclick="navigateTo('laporan')">Laporkan</a></li>
       <li><a href="#tentang" class="nav-link" onclick="navigateTo('tentang')">Tentang</a></li>
+      <li id="navDashboardItem" style="display:none">
+        <a href="#dashboard" class="nav-link" onclick="navigateTo('dashboard')">📊 Dashboard</a>
+      </li>
     </ul>
     <div class="nav-right">
       <div class="live-badge">
         <span class="live-dot"></span>
         <span>Live</span>
       </div>
+      <!-- Admin user badge (shown after login) -->
+      <div class="admin-badge" id="adminBadge" style="display:none" onclick="toggleAdminMenu(event)">
+        <span class="admin-avatar">🏛️</span>
+        <span id="adminName">Admin</span>
+        <span style="font-size:0.7rem;opacity:0.6">▾</span>
+        <div class="admin-menu" id="adminMenu">
+          <div class="admin-menu-item" onclick="navigateTo('dashboard');document.getElementById('adminMenu').classList.remove('open')">
+            📊 Dashboard
+          </div>
+          <div class="admin-menu-item" onclick="gantiAkun()">
+            🔁 Ganti Akun
+          </div>
+          <div class="admin-menu-item admin-menu-logout" onclick="doLogout()">
+            ⏻ Logout
+          </div>
+        </div>
+      </div>
+      <!-- Login button (shown when not logged in) -->
+      <button class="btn-login" id="btnLoginNav" onclick="navigateTo('login')">
+        🔑 Login Admin
+      </button>
       <button class="hamburger" id="hamburger" onclick="toggleMenu()">
         <span></span><span></span><span></span>
       </button>
@@ -155,6 +316,90 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════
+     LOGIN SECTION
+═══════════════════════════════════════════════════════════ -->
+<section class="page hidden" id="login">
+  <div class="login-page">
+    <div class="login-page-left">
+      <div class="login-page-brand">
+        <svg width="56" height="56" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="18" fill="url(#lpGrad)"/>
+          <path d="M18 8C14 14 10 16 10 21a8 8 0 0016 0c0-5-4-7-8-13z" fill="white" opacity="0.95"/>
+          <circle cx="18" cy="21" r="3" fill="#00b4d8" opacity="0.9"/>
+          <defs><linearGradient id="lpGrad" x1="0" y1="0" x2="36" y2="36">
+            <stop offset="0%" stop-color="#1a3a5c"/>
+            <stop offset="100%" stop-color="#0077b6"/>
+          </linearGradient></defs>
+        </svg>
+        <div>
+          <div class="login-page-name">SIMATA</div>
+          <div class="login-page-sub">Sistem Informasi Monitoring Air Tanah</div>
+        </div>
+      </div>
+      <h2 class="login-page-title">Panel Administrasi<br/><span class="text-gradient">Kota Palu</span></h2>
+      <p class="login-page-desc">Khusus untuk petugas DLH & BPBD Kota Palu yang berwenang memantau, memvalidasi data, dan mengambil keputusan distribusi air bersih.</p>
+      <div class="login-info-list">
+        <div class="login-info-item"><span>📊</span> Akses Dashboard Analitik Penuh</div>
+        <div class="login-info-item"><span>✅</span> Validasi Laporan Warga</div>
+        <div class="login-info-item"><span>🗺️</span> Monitoring Peta Real-time</div>
+        <div class="login-info-item"><span>🔔</span> Kelola Notifikasi Zona Kritis</div>
+      </div>
+    </div>
+    <div class="login-page-right">
+      <div class="login-form-card">
+        <h3>Masuk ke Panel Admin</h3>
+        <p class="login-form-sub">Gunakan akun yang diberikan oleh administrator sistem.</p>
+        <div id="loginError" class="login-error" style="display:none">
+          ❌ Username atau password salah. Coba lagi.
+        </div>
+        <div class="lf-group">
+          <label for="inputUsername">Username</label>
+          <div class="lf-input-wrap">
+            <span class="lf-icon">👤</span>
+            <input type="text" id="inputUsername" class="lf-input" placeholder="Masukkan username" autocomplete="username" />
+          </div>
+        </div>
+        <div class="lf-group">
+          <label for="inputPassword">Password</label>
+          <div class="lf-input-wrap">
+            <span class="lf-icon">🔒</span>
+            <input type="password" id="inputPassword" class="lf-input" placeholder="Masukkan password" autocomplete="current-password"
+              onkeydown="if(event.key==='Enter') doLogin()" />
+            <button class="lf-toggle-pw" onclick="togglePassword()" id="pwToggleBtn" title="Tampilkan password">👁️</button>
+          </div>
+        </div>
+        <div class="lf-group">
+          <label>Role / Jabatan</label>
+          <div class="lf-role-selector">
+            <label class="lf-role selected" id="role-dlh" onclick="selectRole('DLH')">
+              <input type="radio" name="loginRole" value="DLH" checked />
+              <span>🌿 DLH</span>
+            </label>
+            <label class="lf-role" id="role-bpbd" onclick="selectRole('BPBD')">
+              <input type="radio" name="loginRole" value="BPBD" />
+              <span>🚒 BPBD</span>
+            </label>
+            <label class="lf-role" id="role-super" onclick="selectRole('Superadmin')">
+              <input type="radio" name="loginRole" value="Superadmin" />
+              <span>⭐ Superadmin</span>
+            </label>
+          </div>
+        </div>
+        <button class="lf-submit" id="loginBtn" onclick="doLogin()">
+          <span id="loginBtnText">Masuk ke Dashboard →</span>
+        </button>
+        <div class="lf-hint">
+          <strong>Demo:</strong> username <code>admin</code> · password <code>simata2026</code>
+        </div>
+        <button class="lf-back" onclick="navigateTo('beranda')">
+          ← Kembali ke Beranda
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
      DASHBOARD SECTION
 ═══════════════════════════════════════════════════════════ -->
 <section class="page hidden" id="dashboard">
@@ -178,6 +423,18 @@
           <option value="365">1 Tahun</option>
         </select>
       </div>
+    </div>
+
+    <!-- Role Info Banner -->
+    <div class="role-banner" id="roleBanner" style="display:none">
+      <div class="role-banner-left">
+        <span class="role-banner-icon" id="roleBannerIcon">🏛️</span>
+        <div>
+          <div class="role-banner-title" id="roleBannerTitle">Admin DLH Palu</div>
+          <div class="role-banner-sub" id="roleBannerSub">Dinas Lingkungan Hidup — Akses: Validasi Laporan, Export Data</div>
+        </div>
+      </div>
+      <div class="role-banner-chips" id="roleBannerChips"></div>
     </div>
 
     <!-- Status Cards -->
@@ -315,6 +572,113 @@
         </table>
       </div>
     </div>
+
+    <!-- ═══ PANEL DLH (Validasi Laporan + Export) ═══ -->
+    <div class="role-panel" id="panelDLH" style="display:none">
+      <div class="role-panel-header">
+        <span>🌿</span>
+        <div>
+          <h3>Panel DLH — Validasi Laporan Warga</h3>
+          <p>Review dan setujui/tolak laporan kondisi sumur dari masyarakat</p>
+        </div>
+        <button class="export-btn" onclick="exportDataDLH()">⬇️ Export Excel</button>
+      </div>
+      <div class="validasi-list" id="validasiList">
+        <!-- diisi JS -->
+      </div>
+    </div>
+
+    <!-- ═══ PANEL BPBD (Distribusi Air) ═══ -->
+    <div class="role-panel" id="panelBPBD" style="display:none">
+      <div class="role-panel-header">
+        <span>🚒</span>
+        <div>
+          <h3>Panel BPBD — Rencana Distribusi Air Bersih</h3>
+          <p>Kelola pengiriman truk tangki air ke wilayah zona kritis</p>
+        </div>
+        <button class="export-btn" onclick="tambahRute()">➕ Tambah Rute</button>
+      </div>
+      <div class="distribusi-grid">
+        <div class="distribusi-card d-kritis">
+          <div class="d-card-header">🔴 Zona Kritis — Prioritas Utama</div>
+          <div class="d-list" id="distribusiKritis">
+            <div class="d-item"><span class="d-kelurahan">Talise</span><span class="d-info">Truk #A03 · Jadwal: Besok 08.00</span><span class="d-badge b-scheduled">Terjadwal</span></div>
+            <div class="d-item"><span class="d-kelurahan">Besusu Timur</span><span class="d-info">Truk #B07 · Jadwal: Besok 10.00</span><span class="d-badge b-scheduled">Terjadwal</span></div>
+            <div class="d-item"><span class="d-kelurahan">Mamboro</span><span class="d-info">Belum ada truk ditugaskan</span><span class="d-badge b-pending">Menunggu</span></div>
+            <div class="d-item"><span class="d-kelurahan">Lasoani</span><span class="d-info">Belum ada truk ditugaskan</span><span class="d-badge b-pending">Menunggu</span></div>
+          </div>
+        </div>
+        <div class="distribusi-card d-waspada">
+          <div class="d-card-header">🟡 Zona Waspada — Prioritas Kedua</div>
+          <div class="d-list">
+            <div class="d-item"><span class="d-kelurahan">Balaroa</span><span class="d-info">Truk #C02 · Jadwal: Lusa 09.00</span><span class="d-badge b-scheduled">Terjadwal</span></div>
+            <div class="d-item"><span class="d-kelurahan">Pantoloan</span><span class="d-info">Standby — cek kondisi dulu</span><span class="d-badge b-standby">Standby</span></div>
+          </div>
+        </div>
+        <div class="distribusi-card d-kontak">
+          <div class="d-card-header">📞 Kontak Darurat</div>
+          <div class="d-list">
+            <div class="d-contact"><span>🚒</span><span>BPBD Kota Palu</span><strong>0451-421234</strong></div>
+            <div class="d-contact"><span>🌿</span><span>DLH Kota Palu</span><strong>0451-421456</strong></div>
+            <div class="d-contact"><span>💧</span><span>PDAM Kota Palu</span><strong>0451-421789</strong></div>
+            <div class="d-contact"><span>🏥</span><span>Dinas Kesehatan</span><strong>0451-421100</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL SUPERADMIN (Manajemen Pengguna) ═══ -->
+    <div class="role-panel" id="panelSuperadmin" style="display:none">
+      <div class="role-panel-header">
+        <span>⭐</span>
+        <div>
+          <h3>Panel Superadmin — Manajemen Pengguna</h3>
+          <p>Kelola akun admin DLH dan BPBD yang memiliki akses ke sistem</p>
+        </div>
+        <button class="export-btn" onclick="tambahPengguna()">➕ Tambah Pengguna</button>
+      </div>
+      <div class="table-wrapper" style="margin-top:16px">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Nama</th><th>Username</th><th>Role</th><th>Terakhir Login</th><th>Status</th><th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">Admin DLH Palu</td>
+              <td><code style="color:var(--cyan)">admin</code></td>
+              <td><span class="role-chip chip-dlh">🌿 DLH</span></td>
+              <td style="color:var(--text-muted);font-size:0.8rem">09 Sep 2026 · 08:04</td>
+              <td><span class="status-badge badge-aman"><span class="badge-dot"></span>Aktif</span></td>
+              <td><button class="tbl-act-btn" onclick="showToast('Fitur edit akan segera hadir','info')">✏️ Edit</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">Admin BPBD Palu</td>
+              <td><code style="color:var(--cyan)">bpbd</code></td>
+              <td><span class="role-chip chip-bpbd">🚒 BPBD</span></td>
+              <td style="color:var(--text-muted);font-size:0.8rem">08 Sep 2026 · 14:22</td>
+              <td><span class="status-badge badge-aman"><span class="badge-dot"></span>Aktif</span></td>
+              <td><button class="tbl-act-btn" onclick="showToast('Fitur edit akan segera hadir','info')">✏️ Edit</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:500">Superadmin</td>
+              <td><code style="color:var(--cyan)">superadmin</code></td>
+              <td><span class="role-chip chip-super">⭐ Super</span></td>
+              <td style="color:var(--text-muted);font-size:0.8rem">09 Sep 2026 · 08:17</td>
+              <td><span class="status-badge badge-aman"><span class="badge-dot"></span>Aktif</span></td>
+              <td><button class="tbl-act-btn" style="opacity:0.3;cursor:not-allowed">🔒 Root</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Superadmin juga bisa lihat panel DLH dan BPBD -->
+      <div style="margin-top:20px;padding:14px;background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.2);border-radius:var(--radius-md);font-size:0.83rem;color:#a78bfa">
+        ⭐ Sebagai Superadmin, Anda memiliki <strong>akses penuh</strong> ke semua fitur DLH, BPBD, dan konfigurasi sistem.
+        Gulir ke atas untuk melihat grafik monitoring, atau gunakan menu navigasi untuk mengakses Peta dan Laporan.
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -719,9 +1083,13 @@
 </footer>
 
 <!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
+
+
 </body>
 </html>
